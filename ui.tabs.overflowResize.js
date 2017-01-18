@@ -64,7 +64,11 @@ $.extend($.ui.tabs.prototype, {
 			if(!item.length)
 				return;
 
-			var totalMargin = (item[0].getBoundingClientRect().width - parseFloat(window.getComputedStyle(item[0]).width)) * self.tabs.length;
+			var totalMargin = 0;
+			var visibleTabs = self._getList().children(':not(.button) :visible');
+			if(visibleTabs.length > 0) {
+				totalMargin = (visibleTabs[0].getBoundingClientRect().width - parseFloat(window.getComputedStyle(visibleTabs[0]).width)) * self.tabs.length;
+			}
 			var availableWidth = containerWidth - totalButtonWidth - totalMargin;
 			var tabMaxWidth = availableWidth / item.length;
 			var css = {'max-width' : tabMaxWidth};
